@@ -9,14 +9,14 @@ import lombok.*;
 @Data
 @RequiredArgsConstructor
 @Table(name="user")
-public class User {
+public class UserCustom {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @NonNull
-    @Column(name ="userId")
+    @Column(name ="user_id")
     private String userId;
 
     @NonNull
