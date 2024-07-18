@@ -1,4 +1,4 @@
-package com.example.starbucks.service;
+package com.example.starbucks.service.coffeeService;
 
 import com.example.starbucks.model.Coffee;
 import com.example.starbucks.repository.CoffeeRepository;

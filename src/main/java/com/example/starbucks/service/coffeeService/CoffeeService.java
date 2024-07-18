@@ -1,10 +1,7 @@
-package com.example.starbucks.service;
+package com.example.starbucks.service.coffeeService;
 
 import com.example.starbucks.model.Coffee;
 import com.example.starbucks.status.ResultStatus;
-import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 import java.util.Optional;

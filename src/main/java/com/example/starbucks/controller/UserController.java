@@ -1,15 +1,19 @@
 package com.example.starbucks.controller;
 
 import com.example.starbucks.dto.ApiResponse;
-import com.example.starbucks.model.Coffee;
 import com.example.starbucks.model.UserCustom;
 import com.example.starbucks.service.UserDetailServiceImpl;
 import com.example.starbucks.service.UserService;
 import com.example.starbucks.status.ResponseStatus;
 import com.example.starbucks.status.ResultStatus;
+import com.example.starbucks.token.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -65,8 +69,25 @@ public class UserController {
             }
 
             // 성공
-            ApiResponse apiResponse = new ApiResponse(ResponseStatus.SUCCESS, "로그인 성공", null);
-            return ResponseEntity.ok(apiResponse);
+            // 토큰 발급
+            String token = JwtUtil.generateToken(userCustom);
+
+            // response header
+            HttpHeaders httpHeaders = new HttpHeaders();
+            httpHeaders.set("Authorization", "Bearer " + token);
+
+            // 출입증 객체
+            Authentication authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+            // 출입관리부에 작성
+            // 카카오톡[]    getContext() -> 전역으로 쓰이는 변수에 접근하는 메서드
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+
+
+
+
+            // response body
+            ApiResponse apiResponse = new ApiResponse(ResponseStatus.SUCCESS, "로그인 성공", token);
+            return ResponseEntity.ok().headers(httpHeaders).body(apiResponse);
 
 
         } catch (UsernameNotFoundException | BadCredentialsException e){

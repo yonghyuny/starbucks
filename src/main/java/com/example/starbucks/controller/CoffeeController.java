@@ -2,7 +2,7 @@ package com.example.starbucks.controller;
 
 import com.example.starbucks.dto.ApiResponse;
 import com.example.starbucks.model.Coffee;
-import com.example.starbucks.service.CoffeeService;
+import com.example.starbucks.service.coffeeService.CoffeeService;
 import com.example.starbucks.status.ResponseStatus;
 import com.example.starbucks.status.ResultStatus;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +19,7 @@ public class CoffeeController {
     @Autowired
     CoffeeService coffeeService;
 
-    @GetMapping("all")
+    @GetMapping("/all")
     public ResponseEntity<ApiResponse<List<Coffee>>> getAllCoffees() {
         List<Coffee> coffeeList = coffeeService.getAllCoffees();
         ApiResponse apiResponse = new ApiResponse(ResponseStatus.SUCCESS, "성공", coffeeList);
